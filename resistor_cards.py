@@ -169,7 +169,7 @@ def generate_card(
     text_x = CARD_WIDTH / 2
     text_y = 1.7
     res_text_opts = text_opts | {"fontsize": "large", "fontweight": "bold"}
-    ax.text(text_x, text_y, f"{rval}, 5%, 1%", **res_text_opts)
+    ax.text(text_x, text_y, f"{rval}, {five_box_tol:g}%, {five_box_tol:g}%", **res_text_opts)
     gen_border(ax, 0.05)
 
     ax.axis("equal")
