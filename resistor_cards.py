@@ -213,7 +213,7 @@ def gen_print_page(png_paths: list[Path], nrows, ncols, page_png_path: Path):
 
 
 def gen_print_pages(png_dir: Path):
-    """Generate pages of images of all the """
+    """Generate pages of images of all the images in the png_dir"""
     # delete existing pages of pngs
     prefix = "page"
     for p in png_dir.glob("page*.png"):
