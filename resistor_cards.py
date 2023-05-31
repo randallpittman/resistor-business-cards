@@ -106,16 +106,12 @@ def gen_squares_coords(sq_side: float, spacing: float) -> tuple[list[Square], li
         List of Square coordinate objects for the set of five squares
 
     """
-    # total width of four and five boxes
-    four_box_width = sq_side * 4 + spacing * 3
-    five_box_width = sq_side * 5 + spacing * 4
 
-    # find a centered margin for each set of boxes
-    four_box_x0 = (CARD_WIDTH - four_box_width) / 2
-    five_box_x0 = (CARD_WIDTH - five_box_width) / 2
-
-    five_box_y0 = five_box_x0  # even margins
-    four_box_y0 = five_box_y0 + sq_side + spacing
+    boxes_right = CARD_WIDTH - 2 * spacing  # end boxes two spacings from the right edge
+    five_box_y0 = 2 * spacing
+    five_box_x0 = boxes_right - 5 * sq_side - 4 * spacing
+    four_box_x0 = five_box_x0 + sq_side / 2 + spacing / 2
+    four_box_y0 = five_box_y0 + sq_side + 2 * spacing
 
     four_box_coords = [Square(four_box_x0 + i * (sq_side + spacing), four_box_y0, sq_side) for i in range(4)]
 
@@ -151,7 +147,7 @@ def generate_card(
     four_colors = [*rval.as_three_bands(), TolerancePercentColor(four_box_tol).name]
     five_colors = [*rval.as_four_bands(), TolerancePercentColor(five_box_tol).name]
 
-    four_coords, five_coords = gen_squares_coords(sq_side=0.5, spacing=0.125)
+    four_coords, five_coords = gen_squares_coords(sq_side=0.45, spacing=0.1)
 
     text_opts = {
         "horizontalalignment": "center",
@@ -166,10 +162,16 @@ def generate_card(
         ax.fill(square.x, square.y, ColorHex[color])
         ax.text(square.center_x, square.center_y, ColorAbbr[color], **square_text_opts)
 
-    text_x = CARD_WIDTH / 2
-    text_y = 1.7
+    res_text_x = CARD_WIDTH / 2
+    res_text_y = 1.6
+    five_band_txt_y0 = 0.4
+    four_band_txt_y0 = five_band_txt_y0 + 0.45 + 0.2
+    five_band_txt_x0 = 0.35
+    four_band_txt_x0 = 0.6
     res_text_opts = text_opts | {"fontsize": "large", "fontweight": "bold"}
-    ax.text(text_x, text_y, f"{rval}, {five_box_tol:g}%, {five_box_tol:g}%", **res_text_opts)
+    ax.text(res_text_x, res_text_y, str(rval), **res_text_opts)
+    ax.text(five_band_txt_x0, five_band_txt_y0, f"{five_box_tol:g}%", **res_text_opts)
+    ax.text(four_band_txt_x0, four_band_txt_y0, f"{four_box_tol:g}%", **res_text_opts)
     gen_border(ax, 0.05)
 
     ax.axis("equal")
