@@ -13,8 +13,8 @@ from resistor import ResistorValue, TolerancePercentColor
 
 matplotlib.use("Agg")
 
-E_12: Final[list[float]] = [1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2]
-EXTRAS: Final[list[float]] = [3.0, 5.1]
+E_12: list[float] = [1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2]
+EXTRAS: list[float] = [3.0, 5.1]
 
 CARD_WIDTH = 3.5
 CARD_HEIGHT = 2
